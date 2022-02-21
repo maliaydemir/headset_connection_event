@@ -51,6 +51,21 @@ class HeadsetEvent {
         return null;
     }
   }
+  ///If bluetooth is currently enabled this method will disable bluetooth and wait 1 second then reopen.
+  Future<void> resetBluetooth() async {
+    //tHİS
+    await _channel.invokeMethod<void>('resetBluetooth');
+  }
+  ///If bluetooth is currently disabled this method will enable bluetooth.
+  Future<void> enableBluetooth() async {
+    //tHİS
+    await _channel.invokeMethod<void>('enableBluetooth');
+  }
+  ///If bluetooth is currently enabled this method will close bluetooth.
+  Future<void> disableBluetooth() async {
+    //tHİS
+    await _channel.invokeMethod<void>('disableBluetooth');
+  }
 
   //Sets a callback that is called whenever a change in [HeadsetState] happens.
   //Callback function [onPlugged] must accept a [HeadsetState] parameter.

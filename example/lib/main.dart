@@ -16,6 +16,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+    _headsetPlugin.resetBluetooth();
+
     /// if headset is plugged
     _headsetPlugin.getCurrentState.then((_val) {
       setState(() {
@@ -43,7 +45,9 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 Icon(
                   Icons.headset,
-                  color: this._headsetState == HeadsetState.CONNECT ? Colors.green : Colors.red,
+                  color: this._headsetState == HeadsetState.CONNECT
+                      ? Colors.green
+                      : Colors.red,
                 ),
                 Text('State : $_headsetState\n'),
               ],

@@ -3,6 +3,7 @@ package flutter.moum.headset_connection_event;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 
@@ -64,6 +65,14 @@ public class HeadsetConnectionEventPlugin implements FlutterPlugin, MethodCallHa
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         if (call.method.equals("getCurrentState")) {
             result.success(currentState);
+        } else if (call.method.equals("resetBluetooth")) {
+            resetBluetooth();
+        }
+        else if (call.method.equals("enableBluetooth")) {
+            enbleBluetooth();
+        }
+        else if (call.method.equals("disableBluetooth")) {
+            disableBluetooth();
         } else {
             result.notImplemented();
         }
@@ -72,5 +81,24 @@ public class HeadsetConnectionEventPlugin implements FlutterPlugin, MethodCallHa
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         channel.setMethodCallHandler(null);
+    }
+
+    public void resetBluetooth() {
+        final BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bAdapter.isEnabled()) {
+            bAdapter.disable();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    bAdapter.enable();
+                }
+            }, 1000);
+        }
+    }
+    public void disableBluetooth(){
+        BluetoothAdapter.getDefaultAdapter().disable();
+    }
+    public void enbleBluetooth(){
+        BluetoothAdapter.getDefaultAdapter().enable();
     }
 }
